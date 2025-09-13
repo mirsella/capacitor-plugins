@@ -25,7 +25,7 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
     init {
         val apiKey = config.getApiKey()
         if (apiKey != null) {
-            setup(apiKey, config.getHost(), config.getEnableSessionReplay(), config.getSessionReplayConfig())
+            setup(apiKey, config.getHost(), config.getEnableSessionReplay(), config.getSessionReplayConfig(), null)
         }
     }
 
@@ -106,8 +106,11 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
     fun setup(options: SetupOptions) {
         val apiKey = options.apiKey
         val host = options.host
+        val enableSessionReplay = options.enableSessionReplay
+        val sessionReplayConfig = options.sessionReplayConfig
+        val config = options.config
 
-        setup(apiKey, host)
+        setup(apiKey, host, enableSessionReplay, sessionReplayConfig, config)
     }
 
     fun unregister(options: UnregisterOptions) {
@@ -116,7 +119,7 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
         com.posthog.PostHog.unregister(key = key)
     }
 
-    private fun setup(apiKey: String, host: String, enableSessionReplay: Boolean = false, sessionReplayConfig: SessionReplayOptions? = null) {
+    private fun setup(apiKey: String, host: String, enableSessionReplay: Boolean = false, sessionReplayConfig: SessionReplayOptions? = null, configMap: Map<String, Any>? = null) {
         val posthogConfig = PostHogAndroidConfig(
             apiKey = apiKey,
             host = host
@@ -144,6 +147,32 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
             posthogConfig.sessionReplayConfig.throttleDelayMs = (debouncerDelaySeconds * 1000).toLong()
         }
 
+        // Apply custom configuration parameters
+        configMap?.let { config ->
+            applyConfigToPostHogConfig(posthogConfig, config)
+        }
+
         PostHogAndroid.setup(plugin.context, posthogConfig)
+    }
+
+    private fun applyConfigToPostHogConfig(posthogConfig: PostHogAndroidConfig, configMap: Map<String, Any>) {
+        configMap.forEach { (key, value) ->
+            try {
+                val field = posthogConfig.javaClass.getDeclaredField(key)
+                field.isAccessible = true
+                when (value) {
+                    is Boolean -> field.setBoolean(posthogConfig, value)
+                    is Int -> field.setInt(posthogConfig, value)
+                    is Long -> field.setLong(posthogConfig, value)
+                    is Float -> field.setFloat(posthogConfig, value)
+                    is Double -> field.setDouble(posthogConfig, value)
+                    is String -> field.set(posthogConfig, value)
+                    else -> field.set(posthogConfig, value)
+                }
+            } catch (e: Exception) {
+                // Log the error but don't fail the setup
+                android.util.Log.w("Posthog", "Failed to set config property: $key", e)
+            }
+        }
     }
 }

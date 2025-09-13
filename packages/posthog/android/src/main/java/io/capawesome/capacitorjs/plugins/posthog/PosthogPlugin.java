@@ -243,9 +243,14 @@ public class PosthogPlugin extends Plugin {
             }
             String host = call.getString("host", "https://us.i.posthog.com");
             Boolean enableSessionReplay = call.getBoolean("enableSessionReplay", false);
+            JSObject configObject = call.getObject("config");
+            Map<String, Object> config = null;
 
-            SetupOptions options = new SetupOptions(apiKey, host);
-            options.setEnableSessionReplay(enableSessionReplay != null ? enableSessionReplay : false);
+            if (configObject != null) {
+                config = configObject.toMap();
+            }
+
+            SetupOptions options = new SetupOptions(apiKey, host, enableSessionReplay != null ? enableSessionReplay : false, config);
 
             JSObject sessionReplayConfigObject = call.getObject("sessionReplayConfig");
             if (sessionReplayConfigObject != null) {

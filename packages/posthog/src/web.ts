@@ -83,6 +83,7 @@ export class PosthogWeb extends WebPlugin implements PosthogPlugin {
     const host = options.host || 'https://us.i.posthog.com';
     const config: Partial<PostHogConfig> = {
       api_host: host,
+      ...(options.config || {}),
     };
 
     // Configure session recording if enabled
@@ -98,7 +99,6 @@ export class PosthogWeb extends WebPlugin implements PosthogPlugin {
         }
       }
     }
-
     posthog.init(options.apiKey, config);
   }
 

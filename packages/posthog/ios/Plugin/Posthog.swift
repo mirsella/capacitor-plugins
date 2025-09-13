@@ -10,7 +10,7 @@ import PostHog
         self.plugin = plugin
         super.init()
         if let apiKey = config.apiKey {
-            self.setup(apiKey: apiKey, host: config.host, enableSessionReplay: config.enableSessionReplay, sessionReplayConfig: config.sessionReplayConfig)
+            self.setup(apiKey: apiKey, host: config.host, enableSessionReplay: config.enableSessionReplay, sessionReplayConfig: config.sessionReplayConfig, configMap: nil)
 
             // Start session recording if configured
             if config.enableSessionReplay {
@@ -101,8 +101,9 @@ import PostHog
         let host = options.getHost()
         let enableSessionReplay = options.getEnableSessionReplay()
         let sessionReplayConfig = options.getSessionReplayConfig()
+        let config = options.getConfig()
 
-        setup(apiKey: apiKey, host: host, enableSessionReplay: enableSessionReplay, sessionReplayConfig: sessionReplayConfig)
+        setup(apiKey: apiKey, host: host, enableSessionReplay: enableSessionReplay, sessionReplayConfig: sessionReplayConfig, configMap: config)
     }
 
     @objc public func startSessionRecording() {
@@ -113,7 +114,7 @@ import PostHog
         PostHogSDK.shared.stopSessionRecording()
     }
 
-    private func setup(apiKey: String, host: String, enableSessionReplay: Bool = false, sessionReplayConfig: SessionReplayOptions? = nil) {
+    private func setup(apiKey: String, host: String, enableSessionReplay: Bool = false, sessionReplayConfig: SessionReplayOptions? = nil, configMap: [String: Any]? = nil) {
         let config = PostHogConfig(apiKey: apiKey, host: host)
         config.captureScreenViews = false
         config.optOut = false
@@ -125,7 +126,25 @@ import PostHog
         config.sessionReplayConfig.captureNetworkTelemetry = sessionReplayConfig?.getCaptureNetworkTelemetry() ?? true
         config.sessionReplayConfig.debouncerDelay = sessionReplayConfig?.getDebouncerDelay() ?? 1.0
 
+        // Apply custom configuration parameters
+        if let customConfig = configMap {
+            applyConfigToPostHogConfig(config: config, configMap: customConfig)
+        }
+
         PostHogSDK.shared.setup(config)
+    }
+
+    private func applyConfigToPostHogConfig(config: PostHogConfig, configMap: [String: Any]) {
+        for (key, value) in configMap {
+            let mirror = Mirror(reflecting: config)
+            for child in mirror.children {
+                if let propertyName = child.label, propertyName == key {
+                    // Use KVC to set the property value
+                    config.setValue(value, forKey: key)
+                    break
+                }
+            }
+        }
     }
 
     @objc public func unregister(_ options: UnregisterOptions) {

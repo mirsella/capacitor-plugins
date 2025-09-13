@@ -2,6 +2,7 @@ package io.capawesome.capacitorjs.plugins.posthog.classes.options;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import java.util.Map;
 
 public class SetupOptions {
 
@@ -17,9 +18,20 @@ public class SetupOptions {
     @Nullable
     private SessionReplayOptions sessionReplayConfig;
 
+    @Nullable
+    private Map<String, Object> config;
+
     public SetupOptions(@NonNull String apiKey, @NonNull String host) {
         this.apiKey = apiKey;
         this.host = host;
+        this.config = null;
+    }
+
+    public SetupOptions(@NonNull String apiKey, @NonNull String host, boolean enableSessionReplay, @Nullable Map<String, Object> config) {
+        this.apiKey = apiKey;
+        this.host = host;
+        this.enableSessionReplay = enableSessionReplay;
+        this.config = config;
     }
 
     @NonNull
@@ -48,5 +60,10 @@ public class SetupOptions {
 
     public void setSessionReplayConfig(@Nullable SessionReplayOptions sessionReplayConfig) {
         this.sessionReplayConfig = sessionReplayConfig;
+    }
+
+    @Nullable
+    public Map<String, Object> getConfig() {
+        return config;
     }
 }

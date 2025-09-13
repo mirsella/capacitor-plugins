@@ -179,8 +179,9 @@ public class PosthogPlugin: CAPPlugin, CAPBridgedPlugin {
         let host = call.getString("host", "https://us.i.posthog.com")
         let enableSessionReplay = call.getBool("enableSessionReplay", false)
         let sessionReplayConfig = call.getObject("sessionReplayConfig")
+        let config = call.getObject("config")
 
-        let options = SetupOptions(apiKey: apiKey, host: host, enableSessionReplay: enableSessionReplay, sessionReplayConfig: sessionReplayConfig)
+        let options = SetupOptions(apiKey: apiKey, host: host, enableSessionReplay: enableSessionReplay, sessionReplayConfig: sessionReplayConfig, config: config)
 
         implementation?.setup(options)
         call.resolve()
