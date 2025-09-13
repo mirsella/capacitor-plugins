@@ -358,6 +358,14 @@ export interface SetupOptions {
    * @since 7.3.0
    */
   sessionReplayConfig?: SessionReplayOptions;
+  /**
+   * Additional configuration options to pass to PostHog initialization.
+   * These will be merged with the default configuration.
+   *
+   * @since 8.0.0
+   * @example { 'autocapture': false, 'enable_recording_console_log': true }
+   */
+  config?: Record<string, any>;
 }
 
 /**

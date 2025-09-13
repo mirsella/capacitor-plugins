@@ -5,20 +5,22 @@ import Foundation
     private var host: String
     private var enableSessionReplay: Bool
     private var sessionReplayConfig: SessionReplayOptions?
+    private var config: [String: Any]?
 
-    init(apiKey: String, host: String, enableSessionReplay: Bool, sessionReplayConfig: [String: Any]?) {
+    init(apiKey: String, host: String, enableSessionReplay: Bool, sessionReplayConfig: [String: Any]?, config: [String: Any]? = nil) {
         self.apiKey = apiKey
         self.host = host
         self.enableSessionReplay = enableSessionReplay
+        self.config = config
 
-        if let config = sessionReplayConfig {
+        if let replayConfig = sessionReplayConfig {
             self.sessionReplayConfig = SessionReplayOptions(
-                screenshotMode: config["screenshotMode"] as? Bool ?? false,
-                maskAllTextInputs: config["maskAllTextInputs"] as? Bool ?? true,
-                maskAllImages: config["maskAllImages"] as? Bool ?? true,
-                maskAllSandboxedViews: config["maskAllSandboxedViews"] as? Bool ?? true,
-                captureNetworkTelemetry: config["captureNetworkTelemetry"] as? Bool ?? true,
-                debouncerDelay: config["debouncerDelay"] as? Double ?? 1.0
+                screenshotMode: replayConfig["screenshotMode"] as? Bool ?? false,
+                maskAllTextInputs: replayConfig["maskAllTextInputs"] as? Bool ?? true,
+                maskAllImages: replayConfig["maskAllImages"] as? Bool ?? true,
+                maskAllSandboxedViews: replayConfig["maskAllSandboxedViews"] as? Bool ?? true,
+                captureNetworkTelemetry: replayConfig["captureNetworkTelemetry"] as? Bool ?? true,
+                debouncerDelay: replayConfig["debouncerDelay"] as? Double ?? 1.0
             )
         }
     }
@@ -37,5 +39,9 @@ import Foundation
 
     func getSessionReplayConfig() -> SessionReplayOptions? {
         return sessionReplayConfig
+    }
+
+    func getConfig() -> [String: Any]? {
+        return config
     }
 }
