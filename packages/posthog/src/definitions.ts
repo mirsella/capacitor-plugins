@@ -362,7 +362,7 @@ export interface SetupOptions {
    * Additional configuration options to pass to PostHog initialization.
    * These will be merged with the default configuration.
    *
-   * @since 8.0.0
+   * @since 7.4.1
    * @example { 'autocapture': false, 'enable_recording_console_log': true }
    */
   config?: Record<string, any>;
