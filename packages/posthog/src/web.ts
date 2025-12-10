@@ -82,8 +82,8 @@ export class PosthogWeb extends WebPlugin implements PosthogPlugin {
   async setup(options: SetupOptions): Promise<void> {
     const host = options.host || 'https://us.i.posthog.com';
     const config: Partial<PostHogConfig> = {
-      api_host: host,
       ...(options.config || {}),
+      api_host: host,
     };
 
     // Configure session recording if enabled
