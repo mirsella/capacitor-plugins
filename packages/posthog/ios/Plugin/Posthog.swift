@@ -136,13 +136,12 @@ import PostHog
 
     private func applyConfigToPostHogConfig(config: PostHogConfig, configMap: [String: Any]) {
         for (key, value) in configMap {
-            let mirror = Mirror(reflecting: config)
-            for child in mirror.children {
-                if let propertyName = child.label, propertyName == key {
-                    // Use KVC to set the property value
-                    config.setValue(value, forKey: key)
-                    break
-                }
+            let setterName = "set\(key.prefix(1).uppercased())\(key.dropFirst()):"
+            let selector = Selector(setterName)
+            if config.responds(to: selector) {
+                config.setValue(value, forKey: key)
+            } else {
+                print("[Posthog] Failed to set config property: \(key) - property not found or not KVC compliant")
             }
         }
     }
