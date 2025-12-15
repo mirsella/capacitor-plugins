@@ -8,6 +8,13 @@ Unofficial Capacitor plugin for [PostHog](https://posthog.com/).[^1]
   </a>
 </div>
 
+## Compatibility
+
+| Plugin Version | Capacitor Version | Status         |
+| -------------- | ----------------- | -------------- |
+| 8.x.x          | >=8.x.x           | Active support |
+| 7.x.x          | 7.x.x             | Deprecated     |
+
 ## Installation
 
 ```bash
@@ -22,7 +29,7 @@ npx cap sync
 If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
 - `$androidxCoreKtxVersion` version of `androidx.core:core-ktx` (default: `1.13.1`)
-- `$posthogVersion` version of `com.posthog:posthog-android` (default: `3.10.0`)
+- `$posthogVersion` version of `com.posthog:posthog-android` (default: `3.27.2`)
 
 This can be useful if you encounter dependency conflicts with other plugins in your project.
 
@@ -512,10 +519,10 @@ Check if the user has opted out of capturing.
 
 #### CaptureOptions
 
-| Prop             | Type                                                         | Description                            | Since |
-| ---------------- | ------------------------------------------------------------ | -------------------------------------- | ----- |
-| **`event`**      | <code>string</code>                                          | The name of the event to capture.      | 6.0.0 |
-| **`properties`** | <code><a href="#record">Record</a>&lt;string, any&gt;</code> | The properties to send with the event. | 6.0.0 |
+| Prop             | Type                                   | Description                            | Since |
+| ---------------- | -------------------------------------- | -------------------------------------- | ----- |
+| **`event`**      | <code>string</code>                    | The name of the event to capture.      | 6.0.0 |
+| **`properties`** | <code>Record&lt;string, any&gt;</code> | The properties to send with the event. | 6.0.0 |
 
 
 #### GetFeatureFlagResult
@@ -548,19 +555,19 @@ Check if the user has opted out of capturing.
 
 #### GroupOptions
 
-| Prop                  | Type                                                         | Description                                  | Since |
-| --------------------- | ------------------------------------------------------------ | -------------------------------------------- | ----- |
-| **`type`**            | <code>string</code>                                          | The group type.                              | 6.0.0 |
-| **`key`**             | <code>string</code>                                          | The group key.                               | 6.0.0 |
-| **`groupProperties`** | <code><a href="#record">Record</a>&lt;string, any&gt;</code> | The properties to send with the group event. | 6.0.0 |
+| Prop                  | Type                                   | Description                                  | Since |
+| --------------------- | -------------------------------------- | -------------------------------------------- | ----- |
+| **`type`**            | <code>string</code>                    | The group type.                              | 6.0.0 |
+| **`key`**             | <code>string</code>                    | The group key.                               | 6.0.0 |
+| **`groupProperties`** | <code>Record&lt;string, any&gt;</code> | The properties to send with the group event. | 6.0.0 |
 
 
 #### IdentifyOptions
 
-| Prop                 | Type                                                         | Description                   | Since |
-| -------------------- | ------------------------------------------------------------ | ----------------------------- | ----- |
-| **`distinctId`**     | <code>string</code>                                          | The distinct ID of the user.  | 6.0.0 |
-| **`userProperties`** | <code><a href="#record">Record</a>&lt;string, any&gt;</code> | The person properties to set. | 6.0.0 |
+| Prop                 | Type                                   | Description                   | Since |
+| -------------------- | -------------------------------------- | ----------------------------- | ----- |
+| **`distinctId`**     | <code>string</code>                    | The distinct ID of the user.  | 6.0.0 |
+| **`userProperties`** | <code>Record&lt;string, any&gt;</code> | The person properties to set. | 6.0.0 |
 
 
 #### IsFeatureEnabledResult
@@ -587,10 +594,10 @@ Check if the user has opted out of capturing.
 
 #### ScreenOptions
 
-| Prop              | Type                                                         | Description                                   | Since |
-| ----------------- | ------------------------------------------------------------ | --------------------------------------------- | ----- |
-| **`screenTitle`** | <code>string</code>                                          | The name of the screen.                       | 6.0.0 |
-| **`properties`**  | <code><a href="#record">Record</a>&lt;string, any&gt;</code> | The properties to send with the screen event. | 6.0.0 |
+| Prop              | Type                                   | Description                                   | Since |
+| ----------------- | -------------------------------------- | --------------------------------------------- | ----- |
+| **`screenTitle`** | <code>string</code>                    | The name of the screen.                       | 6.0.0 |
+| **`properties`**  | <code>Record&lt;string, any&gt;</code> | The properties to send with the screen event. | 6.0.0 |
 
 
 #### SetupOptions
@@ -632,13 +639,6 @@ Check if the user has opted out of capturing.
 
 
 ### Type Aliases
-
-
-#### Record
-
-Construct a type with a set of properties K of type T
-
-<code>{ [P in K]: T; }</code>
 
 
 #### JsonType

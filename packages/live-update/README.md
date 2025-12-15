@@ -31,8 +31,9 @@ Missing a feature? Just [open an issue](https://github.com/capawesome-team/capac
 
 | Plugin Version | Capacitor Version | Status         |
 | -------------- | ----------------- | -------------- |
-| 7.x.x          | >=7.x.x           | Active support |
-| 6.x.x          | 6.x.x             | Maintenance    |
+| 8.x.x          | >=8.x.x           | Active support |
+| 7.x.x          | 7.x.x             | Deprecated     |
+| 6.x.x          | 6.x.x             | Deprecated     |
 | 5.x.x          | 5.x.x             | Deprecated     |
 
 ## Guides
@@ -58,7 +59,7 @@ npx cap sync
 
 If needed, you can define the following project variable in your app’s `variables.gradle` file to change the default version of the dependency:
 
-- `$okhttp3Version` version of `com.squareup.okhttp3:okhttp` (default: `22.3.1`)
+- `$okhttp3Version` version of `com.squareup.okhttp3:okhttp` (default: `5.3.2`)
 - `$zip4jVersion` version of `net.lingala.zip4j:zip4j` (default: `2.11.5`)
 
 This can be useful if you encounter dependency conflicts with other plugins in your project.

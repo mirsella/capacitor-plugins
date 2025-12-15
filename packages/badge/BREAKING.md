@@ -1,10 +1,21 @@
 # Breaking Changes
 
-This is a comprehensive list of the breaking changes introduced in the major version releases of Capacitor Badge plugin.
+This is a comprehensive list of the breaking changes introduced in the major version releases.
 
 ## Versions
 
+- [Version 8.x.x](#version-8xx)
 - [Version 5.x.x](#version-5xx)
+
+## Version 8.x.x
+
+### Capacitor 8
+
+This plugin now supports **Capacitor 8**. The minimum Android SDK version is **36** and the iOS deployment target is **15.0**. Ensure your project meets these requirements before upgrading.
+
+### Error Handling
+
+On iOS 16 and later, the plugin no longer uses the deprecated `applicationIconBadgeNumber` API. Instead, it now utilizes the `UNUserNotificationCenter` to manage badge numbers. This change may affect how errors are handled when setting badge numbers.
 
 ## Version 5.x.x
 
