@@ -45,6 +45,10 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
         com.posthog.PostHog.flush()
     }
 
+    fun getDistinctId(): String {
+        return com.posthog.PostHog.distinctId()
+    }
+
     fun getFeatureFlag(options: GetFeatureFlagOptions): GetFeatureFlagResult {
         val key = options.key
 

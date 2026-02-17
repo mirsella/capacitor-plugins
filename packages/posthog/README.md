@@ -166,6 +166,7 @@ const unregister = async () => {
 * [`alias(...)`](#alias)
 * [`capture(...)`](#capture)
 * [`flush()`](#flush)
+* [`getDistinctId()`](#getdistinctid)
 * [`getFeatureFlag(...)`](#getfeatureflag)
 * [`getFeatureFlagPayload(...)`](#getfeatureflagpayload)
 * [`group(...)`](#group)
@@ -235,6 +236,21 @@ Flush all events in the queue.
 Only available on Android and iOS.
 
 **Since:** 6.0.0
+
+--------------------
+
+
+### getDistinctId()
+
+```typescript
+getDistinctId() => Promise<GetDistinctIdResult>
+```
+
+Get the distinct ID of the current user.
+
+**Returns:** <code>Promise&lt;<a href="#getdistinctidresult">GetDistinctIdResult</a>&gt;</code>
+
+**Since:** 7.6.0
 
 --------------------
 
@@ -516,6 +532,13 @@ Check if the user has opted out of capturing.
 | ---------------- | ------------------------------------------------------------ | -------------------------------------- | ----- |
 | **`event`**      | <code>string</code>                                          | The name of the event to capture.      | 6.0.0 |
 | **`properties`** | <code><a href="#record">Record</a>&lt;string, any&gt;</code> | The properties to send with the event. | 6.0.0 |
+
+
+#### GetDistinctIdResult
+
+| Prop             | Type                | Description                          | Since |
+| ---------------- | ------------------- | ------------------------------------ | ----- |
+| **`distinctId`** | <code>string</code> | The distinct ID of the current user. | 7.6.0 |
 
 
 #### GetFeatureFlagResult

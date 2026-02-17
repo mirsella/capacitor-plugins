@@ -36,6 +36,10 @@ import PostHog
         PostHogSDK.shared.flush()
     }
 
+    @objc public func getDistinctId() -> String {
+        return PostHogSDK.shared.getDistinctId()
+    }
+
     @objc public func getFeatureFlag(_ options: GetFeatureFlagOptions) -> GetFeatureFlagResult {
         let key = options.getKey()
 

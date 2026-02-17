@@ -96,6 +96,18 @@ public class PosthogPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void getDistinctId(PluginCall call) {
+        try {
+            String distinctId = implementation.getDistinctId();
+            JSObject result = new JSObject();
+            result.put("distinctId", distinctId);
+            call.resolve(result);
+        } catch (Exception exception) {
+            rejectCall(call, exception);
+        }
+    }
+
+    @PluginMethod
     public void getFeatureFlag(PluginCall call) {
         try {
             GetFeatureFlagOptions options = new GetFeatureFlagOptions(call);

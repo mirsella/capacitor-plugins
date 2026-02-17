@@ -57,6 +57,12 @@ export interface PosthogPlugin {
    */
   flush(): Promise<void>;
   /**
+   * Get the distinct ID of the current user.
+   *
+   * @since 7.6.0
+   */
+  getDistinctId(): Promise<GetDistinctIdResult>;
+  /**
    * Get the value of a feature flag.
    *
    * @since 7.0.0
@@ -239,6 +245,15 @@ export interface GetFeatureFlagPayloadResult {
    * @since 7.1.0
    */
   value: JsonType;
+}
+
+export interface GetDistinctIdResult {
+  /**
+   * The distinct ID of the current user.
+   *
+   * @since 7.6.0
+   */
+  distinctId: string;
 }
 
 /**
