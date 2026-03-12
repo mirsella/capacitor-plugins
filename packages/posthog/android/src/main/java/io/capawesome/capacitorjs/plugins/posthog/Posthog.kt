@@ -25,7 +25,7 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
     init {
         val apiKey = config.getApiKey()
         if (apiKey != null) {
-            setup(apiKey, config.getHost(), config.getEnableSessionReplay(), false, config.getSessionReplayConfig())
+            setup(apiKey, config.getApiHost(), config.getEnableSessionReplay(), false, config.getSessionReplayConfig())
         }
     }
 
@@ -109,12 +109,12 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
 
     fun setup(options: SetupOptions) {
         val apiKey = options.apiKey
-        val host = options.host
+        val apiHost = options.apiHost
         val enableSessionReplay = options.enableSessionReplay
         val optOut = options.optOut
         val sessionReplayConfig = options.sessionReplayConfig
 
-        setup(apiKey, host, enableSessionReplay, optOut, sessionReplayConfig)
+        setup(apiKey, apiHost, enableSessionReplay, optOut, sessionReplayConfig)
     }
 
     fun unregister(options: UnregisterOptions) {
@@ -135,10 +135,10 @@ class Posthog(private val config: PosthogConfig, private val plugin: PosthogPlug
         return com.posthog.PostHog.isOptOut()
     }
 
-    private fun setup(apiKey: String, host: String, enableSessionReplay: Boolean = false, optOut: Boolean = false, sessionReplayConfig: SessionReplayOptions? = null) {
+    private fun setup(apiKey: String, apiHost: String, enableSessionReplay: Boolean = false, optOut: Boolean = false, sessionReplayConfig: SessionReplayOptions? = null) {
         val posthogConfig = PostHogAndroidConfig(
             apiKey = apiKey,
-            host = host
+            host = apiHost
         )
         posthogConfig.captureScreenViews = false
         posthogConfig.optOut = optOut
